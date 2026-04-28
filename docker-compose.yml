@@ -1,0 +1,18 @@
+services:
+  keepassxc:
+    image: lscr.io/linuxserver/keepassxc:latest
+    container_name: keepassxc
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-100}
+      - TZ=${TZ:-America/Argentina/Buenos_Aires}
+      - CUSTOM_USER=${CUSTOM_USER:-niros}
+      - PASSWORD=${KEEPASSXC_PASSWORD}
+    volumes:
+      - ${CONFIG_PATH}:/config
+      - ${DATA_PATH}:/data
+    ports:
+      - "${HTTP_PORT:-3000}:3000"
+      - "${HTTPS_PORT:-3001}:3001"
+    restart: unless-stopped
+    shm_size: "1gb"
